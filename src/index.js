@@ -22,8 +22,17 @@ import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// Ensure basename is a path (e.g., "/Hustlr") even if PUBLIC_URL is a full URL
+let basename = process.env.PUBLIC_URL || "/";
+try {
+  basename = new URL(basename, window.location.origin).pathname || "/";
+} catch (e) {
+  // keep default on parse errors
+}
+
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename={basename}>
     <ScrollToTop>
       <Provider store={store}>
         <Routes>
